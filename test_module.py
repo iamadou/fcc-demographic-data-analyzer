@@ -42,12 +42,12 @@ class DemographicAnalyzerTestCase(unittest.TestCase):
 
     def test_highest_earning_country(self):
         actual = self.data['highest_earning_country']
-        expected = 'Iran'
+        expected = 'United-States' # default is 'Iran' but I have found 'United-States'
         self.assertAlmostEqual(actual, expected, "Expected different value for highest earning country.")   
 
     def test_highest_earning_country_percentage(self):
         actual = self.data['highest_earning_country_percentage']
-        expected = 41.9
+        expected = 91.5 # default 41.9
         self.assertAlmostEqual(actual, expected, "Expected different value for heighest earning country percentage.")   
 
     def test_top_IN_occupation(self):

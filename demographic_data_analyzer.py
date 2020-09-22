@@ -11,7 +11,8 @@ def get_race_count(df):
     
     # return pd.DataFrame(race_dict.items(), columns=['race', 'race_count'])
     return pd.Series(race_dict)
-    
+
+
 def calculate_demographic_data(print_data=True):
     # Read data from file
     df = pd.read_csv('adult_data.csv', sep=',')
@@ -57,15 +58,19 @@ def calculate_demographic_data(print_data=True):
 
 
     # What country has the highest percentage of people that earn >50K?
-    high_salary_df = df[df['salary'] == '>50K']
-    high_salary_country = high_salary_df['native-country'].tolist()
-    country = max(high_salary_country, key=high_salary_country.count)    
-    print("Country: {}".format(high_salary_country))
-    highest_earning_country = None
-    highest_earning_country_percentage = None
+    country = df[df['salary'] == ">50K"][['sex', 'native-country']] 
+    top = country.describe() 
+    highest_earning_country = top.loc['top','native-country']
+    
+    earn_country =  df[df['salary'] == '>50K']
+    earn_country_list = earn_country['native-country'].tolist()
+    highest_earning_country_percentage = round((earn_country_list.count(highest_earning_country)/len(earn_country_list)) * 100, 1)
+  
 
     # Identify the most popular occupation for those who earn >50K in India.
-    top_IN_occupation = None
+    india_df = df.loc[(df['salary'] == '>50K') & (df['native-country'] == 'India')]
+    occupation_list = india_df['occupation'].tolist()
+    top_IN_occupation = max(set(occupation_list), key = occupation_list.count)
 
     # DO NOT MODIFY BELOW THIS LINE
 
